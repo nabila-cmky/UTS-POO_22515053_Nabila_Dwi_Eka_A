@@ -20,14 +20,15 @@ public class Penyewa {
             && nomorIdentitas != null && nomorIdentitas.matches("\\d{16}");
     }
 
-    public boolean ubahDataKontak(String teleponBaru, String alamatBaru) {
+    public void ubahDataKontak(String teleponBaru, String alamatBaru) {
         if (teleponBaru == null || !teleponBaru.matches("\\d{10,13}")
                 || alamatBaru == null || alamatBaru.isBlank()) {
-            return false;
+            System.out.println("Data kontak tidak valid, perubahan dibatalkan.");
+            return;
         }
         nomorTelepon = teleponBaru;
         alamat = alamatBaru;
-        return true;
+        System.out.println("Data kontak berhasil diubah.");
     }
 
     public void tampilkanInfo() {
