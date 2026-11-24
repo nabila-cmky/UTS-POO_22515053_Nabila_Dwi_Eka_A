@@ -84,12 +84,12 @@ public class Main {
                 try {
                     Field fd = Rental.class.getDeclaredField("daftarPenyewa");
                     fd.setAccessible(true);
-                    ArrayList<Penyewa> daftar = (ArrayList<Penyewa>) fd.get(rental);
+                    ArrayList<?> daftar = (ArrayList<?>) fd.get(rental);
                     Field fi = Penyewa.class.getDeclaredField("idPenyewa");
                     fi.setAccessible(true);
-                    for (Penyewa p : daftar) {
-                        if (idPenyewa.equals(fi.get(p))) {
-                            ps = p;
+                    for (Object item : daftar) {
+                        if (item instanceof Penyewa && idPenyewa.equals(fi.get(item))) {
+                            ps = (Penyewa) item;
                             break;
                         }
                     }
@@ -102,7 +102,7 @@ public class Main {
                 }
                 double tarifSewa = 0;
                 try {
-                    java.lang.reflect.Field f = Kendaraan.class.getDeclaredField("tarifPerHari");
+                    Field f = Kendaraan.class.getDeclaredField("tarifPerHari");
                     f.setAccessible(true);
                     tarifSewa = (double) f.get(kd);
                 } catch (Exception e) {

@@ -21,7 +21,7 @@ public class Rental {
     }
 
     public void tambahKendaraan(Kendaraan k) {
-        if (k == null) {
+        if (k == null || !k.validasiData()) {
             return;
         }
         try {
@@ -78,12 +78,28 @@ public class Rental {
             return false;
         }
         try {
-            Field f = Sewa.class.getDeclaredField("kendaraan");
-            f.setAccessible(true);
-            Kendaraan k = (Kendaraan) f.get(s);
+            Field fid = Sewa.class.getDeclaredField("idSewa");
+            fid.setAccessible(true);
+            String id = (String) fid.get(s);
+            if (id == null || daftarSewa.findById(id) != null) {
+                return false;
+            }
+
+            Field fl = Sewa.class.getDeclaredField("lamaHari");
+            fl.setAccessible(true);
+            if ((int) fl.get(s) <= 0) {
+                return false;
+            }
+
+            Field fk = Sewa.class.getDeclaredField("kendaraan");
+            fk.setAccessible(true);
+            Kendaraan k = (Kendaraan) fk.get(s);
             if (k == null || !k.cekKetersediaan()) {
                 return false;
             }
+
+            s.hitungTotalBiaya();
+            s.hitungTanggalKembali();
             if (!daftarSewa.insert(s)) {
                 return false;
             }
