@@ -29,4 +29,19 @@ public class Kendaraan {
     public boolean cekKetersediaan() {
         return !statusDisewa;
     }
+
+    public void ubahStatusDisewa(boolean status) {
+        this.statusDisewa = status;
+    }
+
+    public void tampilkanInfo() {
+        System.out.println("ID        : " + idKendaraan);
+        System.out.println("No Polisi : " + nomorPolisi);
+        System.out.println("Merk      : " + merk);
+        System.out.println("Tipe      : " + tipe);
+        System.out.println("Tahun     : " + tahun);
+        System.out.printf("Tarif     : Rp%,.0f/hari%n", tarifPerHari);
+        System.out.println("Status    : " + (statusDisewa ? "Disewa" : "Tersedia"));
+        System.out.println();
+    }
 }

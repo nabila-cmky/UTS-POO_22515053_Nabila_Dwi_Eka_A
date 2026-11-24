@@ -8,5 +8,11 @@ public class Main {
 
         System.out.println("K01 tersedia? " + valid.cekKetersediaan());
         System.out.println("K02 tersedia? " + invalid.cekKetersediaan());
+
+        valid.ubahStatusDisewa(true);
+        System.out.println("K01 setelah disewa, tersedia? " + valid.cekKetersediaan());
+
+        valid.tampilkanInfo();
+        invalid.tampilkanInfo();
     }
 }
