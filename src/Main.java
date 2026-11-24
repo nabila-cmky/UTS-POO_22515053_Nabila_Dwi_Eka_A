@@ -39,5 +39,22 @@ public class Main {
 
         System.out.println("===== UJI Penyewa.tampilkanInfo() =====");
         penyewa.tampilkanInfo();
+
+        Sewa sewa = new Sewa("S01", java.time.LocalDate.of(2026, 11, 24), 3, 350000,
+                kendaraan, penyewa);
+
+        System.out.println("===== UJI Sewa.hitungTotalBiaya() =====");
+        System.out.println("Total biaya: " + sewa.hitungTotalBiaya());
+
+        System.out.println("===== UJI Sewa.hitungTanggalKembali() =====");
+        System.out.println("Tanggal mulai: " + java.time.LocalDate.of(2026, 11, 24));
+        System.out.println("Tanggal kembali: " + sewa.hitungTanggalKembali());
+
+        System.out.println("===== UJI Sewa.ubahStatus(false) =====");
+        sewa.ubahStatus(false);
+        System.out.println("Status diubah menjadi tidak aktif.");
+
+        System.out.println("===== UJI Sewa.tampilkanInfo() =====");
+        sewa.tampilkanInfo();
     }
 }
