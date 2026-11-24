@@ -77,6 +77,9 @@ public class Rental {
         if (s == null) {
             return false;
         }
+        if (daftarSewa.isFull()) {
+            return false;
+        }
         try {
             Field fid = Sewa.class.getDeclaredField("idSewa");
             fid.setAccessible(true);
@@ -108,6 +111,10 @@ public class Rental {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    public boolean isDaftarSewaPenuh() {
+        return daftarSewa.isFull();
     }
 
     public boolean akhiriSewa(String id) {

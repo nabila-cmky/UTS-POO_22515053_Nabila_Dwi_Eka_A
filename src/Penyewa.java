@@ -17,7 +17,9 @@ public class Penyewa {
     public boolean validasiIdentitas() {
         return idPenyewa != null && !idPenyewa.isBlank()
             && nama != null && !nama.isBlank()
-            && nomorIdentitas != null && nomorIdentitas.matches("\\d{16}");
+            && nomorIdentitas != null && nomorIdentitas.matches("\\d{16}")
+            && nomorTelepon != null && nomorTelepon.matches("\\d{10,13}")
+            && alamat != null && !alamat.isBlank();
     }
 
     public void ubahDataKontak(String teleponBaru, String alamatBaru) {

@@ -15,20 +15,6 @@ public class Main {
     }
 
     public static void tampilkanMenu() {
-        try {
-            Field fd = Rental.class.getDeclaredField("daftarKendaraan");
-            fd.setAccessible(true);
-            ArrayList<?> daftar = (ArrayList<?>) fd.get(rental);
-            int nomor = 1;
-            for (Object item : daftar) {
-                if (item instanceof Kendaraan) {
-                    System.out.println("Konsistensi kendaraan " + nomor++ + ": "
-                            + ((Kendaraan) item).cekKonsistensiData27());
-                }
-            }
-        } catch (Exception e) {
-            System.out.println("Gagal mengecek konsistensi data.");
-        }
         System.out.println("\n===== MENU RENTAL =====");
         System.out.println("1. Tambah Kendaraan");
         System.out.println("2. Tambah Penyewa");
@@ -143,6 +129,10 @@ public class Main {
                 }
                 break;
             case "4":
+                if (rental.isDaftarSewaPenuh()) {
+                    System.out.println("Daftar sewa penuh (maksimal 100).");
+                    break;
+                }
                 System.out.print("ID Sewa: ");
                 String idSewa = sc.nextLine().trim();
                 System.out.print("ID Kendaraan: ");

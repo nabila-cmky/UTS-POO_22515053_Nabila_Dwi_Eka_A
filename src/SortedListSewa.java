@@ -7,6 +7,9 @@ public class SortedListSewa {
     private int kapasitas;
 
     public SortedListSewa(int kapasitas) {
+        if (kapasitas <= 0) {
+            throw new IllegalArgumentException("Kapasitas harus lebih dari nol.");
+        }
         this.kapasitas = kapasitas;
         this.data = new Sewa[kapasitas];
         this.jumlah = 0;
