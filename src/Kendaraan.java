@@ -25,4 +25,8 @@ public class Kendaraan {
             && tahun >= 1900 && tahun <= java.time.Year.now().getValue()
             && tarifPerHari > 0;
     }
+
+    public boolean cekKetersediaan() {
+        return !statusDisewa;
+    }
 }

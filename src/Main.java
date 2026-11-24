@@ -5,5 +5,8 @@ public class Main {
 
         System.out.println("K01 valid? " + valid.validasiData());
         System.out.println("K02 valid? " + invalid.validasiData());
+
+        System.out.println("K01 tersedia? " + valid.cekKetersediaan());
+        System.out.println("K02 tersedia? " + invalid.cekKetersediaan());
     }
 }
