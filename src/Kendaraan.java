@@ -26,6 +26,10 @@ public class Kendaraan {
             && tarifPerHari > 0;
     }
 
+    public boolean cekKonsistensiData27() {
+        return validasiData();
+    }
+
     public boolean cekKetersediaan() {
         return !statusDisewa;
     }
