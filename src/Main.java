@@ -1,63 +1,128 @@
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.lang.reflect.Field;
 
 public class Main {
+    static Rental rental = new Rental("R01", "Rental Abadi", "Jl. Contoh 1", "081234567890");
+    static Scanner sc = new Scanner(System.in);
+
     public static void main(String[] args) {
-        System.out.println("===== UJI Kendaraan =====");
-        Kendaraan k1 = new Kendaraan("K01", "B 1234 XYZ", "Toyota", "Avanza", 2020, 350000);
-        Kendaraan k2 = new Kendaraan("K02", "D 1111 AB", "Honda", "Brio", 2021, 300000);
+        while (true) {
+            tampilkanMenu();
+            prosesPilihan();
+        }
+    }
 
-        System.out.println("validasi K01: " + k1.validasiData());
-        System.out.println("tersedia K01: " + k1.cekKetersediaan());
-        k1.ubahStatusDisewa(true);
-        System.out.println("tersedia setelah disewa: " + k1.cekKetersediaan());
-        k1.tampilkanInfo();
+    public static void tampilkanMenu() {
+        System.out.println("\n===== MENU RENTAL =====");
+        System.out.println("1. Tambah Kendaraan");
+        System.out.println("2. Tambah Penyewa");
+        System.out.println("3. Cari Kendaraan");
+        System.out.println("4. Buat Sewa");
+        System.out.println("5. Akhiri Sewa");
+        System.out.println("6. Tampilkan Laporan");
+        System.out.println("0. Keluar");
+        System.out.print("Pilihan: ");
+    }
 
-        System.out.println("===== UJI Penyewa =====");
-        Penyewa p1 = new Penyewa("P01", "Nabila Dwi Eka A", "2251505011110001",
-                "081234567890", "Jl. Merdeka No. 1");
-        Penyewa p2 = new Penyewa("P02", "", "123", "08123", "");
-
-        System.out.println("validasi P01: " + p1.validasiIdentitas());
-        System.out.println("validasi P02: " + p2.validasiIdentitas());
-        p1.tampilkanInfo();
-
-        System.out.println("===== UJI Sewa =====");
-        Sewa s1 = new Sewa("S01", LocalDate.of(2026, 11, 24), 3, 350000, k1, p1);
-        System.out.println("total biaya: " + s1.hitungTotalBiaya());
-        System.out.println("tanggal kembali: " + s1.hitungTanggalKembali());
-        s1.ubahStatus(false);
-        s1.tampilkanInfo();
-
-        System.out.println("===== UJI SortedListSewa =====");
-        SortedListSewa list = new SortedListSewa(5);
-
-        System.out.println("isEmpty awal: " + list.isEmpty());
-        System.out.println("size awal: " + list.size());
-
-        Sewa s2 = new Sewa("S02", LocalDate.of(2026, 11, 26), 2, 300000, k2, p1);
-        Sewa s3 = new Sewa("S03", LocalDate.of(2026, 11, 24), 1, 350000, k1, p1);
-        Sewa s4 = new Sewa("S04", LocalDate.of(2026, 11, 25), 4, 300000, k2, p1);
-
-        list.insert(s2);
-        list.insert(s3);
-        list.insert(s4);
-
-        System.out.println("isEmpty setelah insert: " + list.isEmpty());
-        System.out.println("size setelah insert: " + list.size());
-        System.out.println("isFull: " + list.isFull());
-
-        System.out.println("-- tampilkanSemua --");
-        list.tampilkanSemua();
-
-        System.out.println("get(0): " + list.get(0).getClass().getSimpleName());
-        System.out.println("findById S03: " + (list.findById("S03") != null));
-        System.out.println("findById S99: " + (list.findById("S99") == null));
-
-        System.out.println("remove S02: " + list.remove("S02"));
-        System.out.println("remove S99: " + list.remove("S99"));
-        System.out.println("size setelah remove: " + list.size());
-
-        System.out.println("-- tampilkanSemua setelah remove --");
-        list.tampilkanSemua();
+    public static void prosesPilihan() {
+        String pilih = sc.nextLine();
+        switch (pilih) {
+            case "1":
+                System.out.print("ID Kendaraan: ");
+                String id = sc.nextLine();
+                System.out.print("No Polisi: ");
+                String np = sc.nextLine();
+                System.out.print("Merk: ");
+                String merk = sc.nextLine();
+                System.out.print("Tipe: ");
+                String tipe = sc.nextLine();
+                System.out.print("Tahun: ");
+                int tahun = Integer.parseInt(sc.nextLine());
+                System.out.print("Tarif per Hari: ");
+                double tarif = Double.parseDouble(sc.nextLine());
+                rental.tambahKendaraan(new Kendaraan(id, np, merk, tipe, tahun, tarif));
+                System.out.println("Kendaraan diproses.");
+                break;
+            case "2":
+                System.out.print("ID Penyewa: ");
+                String idP = sc.nextLine();
+                System.out.print("Nama: ");
+                String nama = sc.nextLine();
+                System.out.print("No Identitas (16 digit): ");
+                String ni = sc.nextLine();
+                System.out.print("No Telepon: ");
+                String telp = sc.nextLine();
+                System.out.print("Alamat: ");
+                String alamat = sc.nextLine();
+                rental.tambahPenyewa(new Penyewa(idP, nama, ni, telp, alamat));
+                System.out.println("Penyewa diproses.");
+                break;
+            case "3":
+                System.out.print("Masukkan ID Kendaraan: ");
+                Kendaraan k = rental.cariKendaraan(sc.nextLine());
+                if (k != null) {
+                    k.tampilkanInfo();
+                } else {
+                    System.out.println("Kendaraan tidak ditemukan.");
+                }
+                break;
+            case "4":
+                System.out.print("ID Sewa: ");
+                String idSewa = sc.nextLine();
+                System.out.print("ID Kendaraan: ");
+                String idKendaraan = sc.nextLine();
+                System.out.print("ID Penyewa: ");
+                String idPenyewa = sc.nextLine();
+                System.out.print("Tanggal Mulai (YYYY-MM-DD): ");
+                LocalDate tgl = LocalDate.parse(sc.nextLine());
+                System.out.print("Lama Hari: ");
+                int lama = Integer.parseInt(sc.nextLine());
+                Kendaraan kd = rental.cariKendaraan(idKendaraan);
+                Penyewa ps = null;
+                try {
+                    Field fd = Rental.class.getDeclaredField("daftarPenyewa");
+                    fd.setAccessible(true);
+                    ArrayList<Penyewa> daftar = (ArrayList<Penyewa>) fd.get(rental);
+                    Field fi = Penyewa.class.getDeclaredField("idPenyewa");
+                    fi.setAccessible(true);
+                    for (Penyewa p : daftar) {
+                        if (idPenyewa.equals(fi.get(p))) {
+                            ps = p;
+                            break;
+                        }
+                    }
+                } catch (Exception e) {
+                    ps = null;
+                }
+                if (kd == null || ps == null) {
+                    System.out.println("Kendaraan atau penyewa tidak ditemukan.");
+                    break;
+                }
+                double tarifSewa = 0;
+                try {
+                    java.lang.reflect.Field f = Kendaraan.class.getDeclaredField("tarifPerHari");
+                    f.setAccessible(true);
+                    tarifSewa = (double) f.get(kd);
+                } catch (Exception e) {
+                    break;
+                }
+                Sewa s = new Sewa(idSewa, tgl, lama, tarifSewa, kd, ps);
+                System.out.println(rental.buatSewa(s) ? "Sewa berhasil dibuat." : "Sewa gagal dibuat.");
+                break;
+            case "5":
+                System.out.print("ID Sewa yang diakhiri: ");
+                System.out.println(rental.akhiriSewa(sc.nextLine()) ? "Sewa diakhiri." : "Gagal mengakhiri sewa.");
+                break;
+            case "6":
+                rental.tampilkanLaporan();
+                break;
+            case "0":
+                System.out.println("Keluar.");
+                System.exit(0);
+            default:
+                System.out.println("Pilihan tidak valid.");
+        }
     }
 }
