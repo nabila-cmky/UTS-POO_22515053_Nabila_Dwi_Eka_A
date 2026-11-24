@@ -14,5 +14,16 @@ public class Main {
 
         valid.tampilkanInfo();
         invalid.tampilkanInfo();
+
+        Penyewa penyewa = new Penyewa("P01", "Nabila Dwi Eka A", "2251505011110001", "081234567890", "Jl. Merdeka No. 1");
+        Penyewa penyewaInvalid = new Penyewa("P02", "Budi", "123", "08123", "");
+
+        System.out.println("P01 identitas valid? " + penyewa.validasiIdentitas());
+        System.out.println("P02 identitas valid? " + penyewaInvalid.validasiIdentitas());
+
+        penyewa.tampilkanInfo();
+        System.out.println("Ubah kontak P01? " + penyewa.ubahDataKontak("089876543210", "Jl. Sudirman No. 2"));
+        System.out.println("Ubah kontak P01 (invalid)? " + penyewa.ubahDataKontak("12", ""));
+        penyewa.tampilkanInfo();
     }
 }
